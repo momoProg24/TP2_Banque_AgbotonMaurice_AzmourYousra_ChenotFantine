@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BankClient2/BankClient2.iml" filepath="$PROJECT_DIR$/BankClient2/BankClient2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BankServer2/BankServer2.iml" filepath="$PROJECT_DIR$/BankServer2/BankServer2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TP2_Banque_AgbotonMaurice_AzmourYousra_ChenotFantine.iml" filepath="$PROJECT_DIR$/.idea/TP2_Banque_AgbotonMaurice_AzmourYousra_ChenotFantine.iml" />
+    </modules>
+  </component>
+</project>

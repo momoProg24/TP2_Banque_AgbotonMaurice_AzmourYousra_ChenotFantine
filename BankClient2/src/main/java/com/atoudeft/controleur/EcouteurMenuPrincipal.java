@@ -1,6 +1,7 @@
 package com.atoudeft.controleur;
 
 import com.atoudeft.client.Client;
+import com.atoudeft.vue.PanneauConfigServeur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +52,24 @@ public class EcouteurMenuPrincipal implements ActionListener {
                     }
                     break;
                 case "CONFIGURER":
-                    //TODO : compléter (question 1.3)
+                    boolean validConfig = false;
+                    while (!validConfig) {
+                        PanneauConfigServeur panneauConfigServeur = new PanneauConfigServeur(client.getAdrServeur(), client.getPortServeur());
+                        int option = JOptionPane.showConfirmDialog(fenetre, panneauConfigServeur, "Configurer le serveur", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                        if (option == JOptionPane.OK_OPTION) {
+                            try {
+                                String adresseServeur = panneauConfigServeur.getAdresseServeur();
+                                int portServeur = Integer.parseInt(panneauConfigServeur.getPortServeur());
+                                client.setAdrServeur(adresseServeur);
+                                client.setPortServeur(portServeur);
+                                validConfig = true;
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(fenetre, "Le numéro de port doit être un entier valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            break;
+                        }
+                    }
                     break;
                 case "QUITTER":
                     if (client.isConnecte()) {

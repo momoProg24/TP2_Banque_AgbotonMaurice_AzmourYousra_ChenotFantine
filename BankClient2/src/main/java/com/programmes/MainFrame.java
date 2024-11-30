@@ -21,6 +21,7 @@ import java.util.Vector;
  * @version 1.0
  * @since 2023-11-01
  */
+
 public class MainFrame extends JFrame implements Runnable, Observateur {
 
     public static final String TITRE = "BankEts - Client";
@@ -98,6 +99,15 @@ public class MainFrame extends JFrame implements Runnable, Observateur {
                 this.panneauPrincipal.setVisible(false);
                 panneauPrincipal.cacherPanneauCompteClient();
                 panneauPrincipal.montrerPanneauConnexion();
+                miConnecter.setEnabled(true);
+                miDeconnecter.setEnabled(false);
+            } else {
+                this.setTitle(TITRE + " - Connecté");
+                this.panneauPrincipal.setVisible(true);
+                panneauPrincipal.cacherPanneauCompteClient();
+                panneauPrincipal.montrerPanneauCompteClient();
+                miConnecter.setEnabled(false);
+                miDeconnecter.setEnabled(true);
             }
         }
     }
