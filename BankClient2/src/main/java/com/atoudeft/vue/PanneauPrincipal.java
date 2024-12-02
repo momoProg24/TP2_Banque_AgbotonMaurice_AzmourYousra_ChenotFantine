@@ -3,6 +3,7 @@ package com.atoudeft.vue;
 import com.atoudeft.client.Client;
 import com.atoudeft.controleur.EcouteurConnexion;
 import com.atoudeft.controleur.EcouteurListeComptes;
+import com.atoudeft.controleur.EcouteurOperationsCompte;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,8 +53,16 @@ public class PanneauPrincipal  extends JPanel {
 
         panneauCompteClient.add(panneauOperationsCompte, BorderLayout.NORTH);
         panneauCompteClient.add(jlNumerosComptes, BorderLayout.WEST);
+
+
+
         //Enregistrement de l'écouteur de souris:
         jlNumerosComptes.addMouseListener(new EcouteurListeComptes(client));
+
+
+        // Ajout de l'écouteur pour les opérations bancaires
+        EcouteurOperationsCompte ecouteurOperations = new EcouteurOperationsCompte(client, numerosComptes);
+        panneauOperationsCompte.setEcouteur(ecouteurOperations);
 
         this.setLayout(new BorderLayout());
 
