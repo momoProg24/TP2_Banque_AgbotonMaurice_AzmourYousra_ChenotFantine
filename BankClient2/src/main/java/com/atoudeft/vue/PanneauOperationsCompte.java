@@ -42,4 +42,14 @@ public class PanneauOperationsCompte extends JPanel {
         bFacture.addActionListener(ecouteur);
         bHistorique.addActionListener(ecouteur);
     }
+
+    /**
+     * Met à jour le solde affiché dans le panneau. QUESTION 3
+     *
+     * @param typeCompte Type de compte (exemple : "cheque", "epargne").
+     * @param solde      Solde actuel du compte.
+     */
+    public void mettreAJourSolde(String typeCompte, String solde) {
+        lblSolde.setText("Type de compte : " + typeCompte + " | Solde : " + solde);
+    }
 }

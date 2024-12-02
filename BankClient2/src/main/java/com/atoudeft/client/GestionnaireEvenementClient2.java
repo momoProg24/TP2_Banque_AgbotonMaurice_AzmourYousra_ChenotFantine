@@ -7,6 +7,9 @@ import com.atoudeft.vue.PanneauPrincipal;
 import com.programmes.MainFrame;
 
 import javax.swing.*;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
     private Client client;
@@ -93,9 +96,49 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                                 "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
-                case "SELECT" :
+                case "SELECT":
                     arg = evenement.getArgument();
-                    JOptionPane.showMessageDialog(panneauPrincipal,"SELECT "+arg);
+
+                    // Affichage pour débogage
+                    System.out.println("Réponse brute du serveur : " + arg);
+
+                    if (arg.startsWith("OK")) {
+                        String detailsCompte = arg.substring(3).trim(); // Retirer "OK " et récupérer le reste
+                        System.out.println("Détails du compte après 'OK' : " + detailsCompte);
+
+                        // Split avec espace pour séparer les éléments
+                        String[] parts = detailsCompte.split(" ");
+                        System.out.println("Tableau après split : " + Arrays.toString(parts));
+
+                        // Vérifiez qu'il y a au moins deux éléments : numéro du compte et solde
+                        if (parts.length >= 2) {
+                            String numeroCompte = parts[0]; // Identifiant du compte
+                            String solde = parts[1];       // Solde du compte
+
+                            // Mettre à jour l'interface
+                            panneauPrincipal.getPanneauOperationsCompte().mettreAJourSolde("Chèque ou Épargne", solde);
+
+                            JOptionPane.showMessageDialog(panneauPrincipal,
+                                    "Compte sélectionné : " + numeroCompte + "\nSolde : " + solde,
+                                    "Sélection réussie",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(panneauPrincipal,
+                                    "Réponse mal formatée : " + detailsCompte,
+                                    "Erreur",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else if (arg.startsWith("NO")) {
+                        JOptionPane.showMessageDialog(panneauPrincipal,
+                                "Aucun compte sélectionné ou échec de la sélection.",
+                                "Erreur",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(panneauPrincipal,
+                                "Erreur lors de la sélection du compte : " + arg,
+                                "Erreur",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
 
                 /******************* OPÉRATIONS BANCAIRES *******************/

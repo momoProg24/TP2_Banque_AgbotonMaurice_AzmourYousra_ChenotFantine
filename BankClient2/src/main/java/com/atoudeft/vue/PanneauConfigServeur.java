@@ -19,7 +19,7 @@ public class PanneauConfigServeur extends JPanel {
 
         // Ajout des composants au panneau
         setLayout(new GridLayout(2, 2, 5, 5));
-        add(new JLabel("Adresse IP :"));
+        add(new JLabel("appliAdresse IP :"));
         add(txtAdrServeur);
         add(new JLabel("Port :"));
         add(txtNumPort);
