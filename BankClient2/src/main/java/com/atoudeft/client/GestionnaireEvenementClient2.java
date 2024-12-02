@@ -8,8 +8,6 @@ import com.programmes.MainFrame;
 
 import javax.swing.*;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
     private Client client;
