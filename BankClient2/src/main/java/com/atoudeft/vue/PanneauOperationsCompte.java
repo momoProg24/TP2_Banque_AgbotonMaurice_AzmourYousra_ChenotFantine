@@ -7,6 +7,12 @@ import java.awt.event.ActionListener;
 public class PanneauOperationsCompte extends JPanel {
     private JButton bEpargne, bDepot, bRetrait, bTransfert, bFacture, bHistorique;
     private JLabel lblSolde;
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+    private PanneauDepot panneauDepot;
+    private PanneauRetrait panneauRetrait;
+    private PanneauTransfert panneauTransfert;
+    private PanneauPaiementFacture panneauPaiementFacture;
 
     public PanneauOperationsCompte() {
         bEpargne = new JButton("Créer compte épargne");
@@ -24,16 +30,33 @@ public class PanneauOperationsCompte extends JPanel {
         bFacture.setActionCommand("FACTURE");
         bHistorique.setActionCommand("HIST");
 
-        //à compléter :
-        this.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        this.add(lblSolde);
-        this.add(bEpargne);
-        this.add(bDepot);
-        this.add(bRetrait);
-        this.add(bTransfert);
-        this.add(bFacture);
-        this.add(bHistorique);
+        this.setLayout(new BorderLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(lblSolde);
+        buttonPanel.add(bEpargne);
+        buttonPanel.add(bDepot);
+        buttonPanel.add(bRetrait);
+        buttonPanel.add(bTransfert);
+        buttonPanel.add(bFacture);
+        buttonPanel.add(bHistorique);
+        this.add(buttonPanel, BorderLayout.NORTH);
+
+        cardLayout = new CardLayout();
+        cardPanel = new JPanel(cardLayout);
+
+        panneauDepot = new PanneauDepot();
+        panneauRetrait = new PanneauRetrait();
+        panneauTransfert = new PanneauTransfert();
+        panneauPaiementFacture = new PanneauPaiementFacture();
+
+        cardPanel.add(panneauDepot, "DEPOT");
+        cardPanel.add(panneauRetrait, "RETRAIT");
+        cardPanel.add(panneauTransfert, "TRANSFER");
+        cardPanel.add(panneauPaiementFacture, "FACTURE");
+
+        this.add(cardPanel, BorderLayout.CENTER);
     }
+
     public void setEcouteur(ActionListener ecouteur) {
         bEpargne.addActionListener(ecouteur);
         bDepot.addActionListener(ecouteur);
@@ -41,15 +64,34 @@ public class PanneauOperationsCompte extends JPanel {
         bTransfert.addActionListener(ecouteur);
         bFacture.addActionListener(ecouteur);
         bHistorique.addActionListener(ecouteur);
+
+        panneauDepot.setEcouteur(ecouteur);
+        panneauRetrait.setEcouteur(ecouteur);
+        panneauTransfert.setEcouteur(ecouteur);
+        panneauPaiementFacture.setEcouteur(ecouteur);
     }
 
-    /**
-     * Met à jour le solde affiché dans le panneau. QUESTION 3
-     *
-     * @param typeCompte Type de compte (exemple : "cheque", "epargne").
-     * @param solde      Solde actuel du compte.
-     */
+    public void showCard(String card) {
+        cardLayout.show(cardPanel, card);
+    }
+
     public void mettreAJourSolde(String typeCompte, String solde) {
         lblSolde.setText("Type de compte : " + typeCompte + " | Solde : " + solde);
+    }
+
+    public PanneauDepot getPanneauDepot() {
+        return panneauDepot;
+    }
+
+    public PanneauRetrait getPanneauRetrait() {
+        return panneauRetrait;
+    }
+
+    public PanneauTransfert getPanneauTransfert() {
+        return panneauTransfert;
+    }
+
+    public PanneauPaiementFacture getPanneauPaiementFacture() {
+        return panneauPaiementFacture;
     }
 }

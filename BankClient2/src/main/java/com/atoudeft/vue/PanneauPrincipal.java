@@ -61,7 +61,7 @@ public class PanneauPrincipal  extends JPanel {
 
 
         // Ajout de l'écouteur pour les opérations bancaires
-        EcouteurOperationsCompte ecouteurOperations = new EcouteurOperationsCompte(client, numerosComptes);
+        EcouteurOperationsCompte ecouteurOperations = new EcouteurOperationsCompte(client, panneauOperationsCompte);
         panneauOperationsCompte.setEcouteur(ecouteurOperations);
 
         this.setLayout(new BorderLayout());
