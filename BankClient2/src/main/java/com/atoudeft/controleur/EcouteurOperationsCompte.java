@@ -18,33 +18,30 @@ public class EcouteurOperationsCompte implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String actionCommand = e.getActionCommand();
+        Object source = e.getSource();
         try {
-            switch (actionCommand) {
-                case "DEPOT":
-                    panneauOperationsCompte.showCard("DEPOT");
-                   // effectuerDepot(); /// si je mets ca en commentaire il y aucun depot qui se faire
-                    break;
-                case "RETRAIT":
-                    panneauOperationsCompte.showCard("RETRAIT");
-                    effectuerRetrait();
-                    break;
-                case "TRANSFER":
-                    panneauOperationsCompte.showCard("TRANSFER");
-                    effectuerTransfert();
-                    break;
-                case "FACTURE":
-                    panneauOperationsCompte.showCard("FACTURE");
-                    effectuerPaiementFacture();
-                    break;
-                case "EPARGNE":
-                    client.envoyer("EPARGNE");
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null,
-                            "Opération non reconnue.",
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
-                    break;
+            if (source == panneauOperationsCompte.getPanneauDepot().getEffectuerDepotButton()) {
+                effectuerDepot();
+            } else if (source == panneauOperationsCompte.getBDepot()) {
+                panneauOperationsCompte.showCard("DEPOT");
+            } else if (source == panneauOperationsCompte.getBRetrait()) {
+                panneauOperationsCompte.showCard("RETRAIT");
+            } else if (source == panneauOperationsCompte.getPanneauRetrait().getEffectuerRetraitButton()) {
+                effectuerRetrait();
+            } else if (source == panneauOperationsCompte.getBTransfert()) {
+                panneauOperationsCompte.showCard("TRANSFER");
+            } else if (source == panneauOperationsCompte.getPanneauTransfert().getEffectuerTransfertButton()) {
+                effectuerTransfert();
+            } else if (source == panneauOperationsCompte.getBFacture()) {
+                panneauOperationsCompte.showCard("FACTURE");
+            } else if (source == panneauOperationsCompte.getPanneauPaiementFacture().getEffectuerPaiementButton()) {
+                effectuerPaiementFacture();
+            } else if (source == panneauOperationsCompte.getBEpargne()) {
+                client.envoyer("EPARGNE");
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Opération non reconnue.",
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,
@@ -52,6 +49,8 @@ public class EcouteurOperationsCompte implements ActionListener {
                     "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
 
     private void effectuerDepot() throws Exception {
         String montant = panneauOperationsCompte.getPanneauDepot().getMontantField().getText();

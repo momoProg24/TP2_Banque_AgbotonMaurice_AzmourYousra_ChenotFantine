@@ -94,4 +94,25 @@ public class PanneauOperationsCompte extends JPanel {
     public PanneauPaiementFacture getPanneauPaiementFacture() {
         return panneauPaiementFacture;
     }
+
+    public JButton getBDepot() {
+        return bDepot;
+    }
+
+    public JButton getBRetrait() {
+        return bRetrait;
+    }
+
+    public JButton getBTransfert() {
+        return bTransfert;
+    }
+
+    public JButton getBFacture() {
+        return bFacture;
+    }
+
+    public JButton getBEpargne() {
+        return bEpargne;
+    }
+
 }
