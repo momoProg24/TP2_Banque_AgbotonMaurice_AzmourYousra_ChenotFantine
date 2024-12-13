@@ -23,7 +23,7 @@ public class EcouteurOperationsCompte implements ActionListener {
             switch (actionCommand) {
                 case "DEPOT":
                     panneauOperationsCompte.showCard("DEPOT");
-                    effectuerDepot();
+                   // effectuerDepot(); /// si je mets ca en commentaire il y aucun depot qui se faire
                     break;
                 case "RETRAIT":
                     panneauOperationsCompte.showCard("RETRAIT");

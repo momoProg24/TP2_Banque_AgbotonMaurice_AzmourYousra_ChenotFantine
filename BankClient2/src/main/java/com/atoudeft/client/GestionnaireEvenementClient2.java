@@ -140,10 +140,17 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                     break;
 
                 /******************* OPÉRATIONS BANCAIRES *******************/
-                case "DEPOT" :
+                case "DEPOT":
                     arg = evenement.getArgument();
-                    JOptionPane.showMessageDialog(panneauPrincipal,"DEPOT "+arg);
+                    if (arg.startsWith("OK")) {
+                        String nouveauSolde = arg.substring(3).trim();
+                        panneauPrincipal.getPanneauOperationsCompte().mettreAJourSolde("Chèque", nouveauSolde);
+                        JOptionPane.showMessageDialog(panneauPrincipal, "Dépôt effectué avec succès. Nouveau solde : " + nouveauSolde, "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(panneauPrincipal, "Erreur lors du dépôt : " + arg, "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
+
                 case "RETRAIT" :
                     arg = evenement.getArgument();
                     JOptionPane.showMessageDialog(panneauPrincipal,"RETRAIT "+arg);

@@ -16,6 +16,7 @@ public class PanneauDepot extends JPanel {
         add(montantField);
 
         effectuerDepotButton = new JButton("Effectuer Dépôt");
+        effectuerDepotButton.setActionCommand("DEPOT"); //////  permet de faire le depot
         add(effectuerDepotButton);
     }
 
