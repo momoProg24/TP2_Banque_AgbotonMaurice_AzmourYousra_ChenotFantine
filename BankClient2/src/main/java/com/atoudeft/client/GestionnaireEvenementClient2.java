@@ -3,6 +3,8 @@ package com.atoudeft.client;
 import com.atoudeft.commun.evenement.Evenement;
 import com.atoudeft.commun.evenement.GestionnaireEvenement;
 import com.atoudeft.commun.net.Connexion;
+import com.atoudeft.controleur.EcouteurOperationsCompte;
+import com.atoudeft.vue.PanneauOperationsCompte;
 import com.atoudeft.vue.PanneauPrincipal;
 import com.programmes.MainFrame;
 
@@ -12,6 +14,7 @@ import java.util.Arrays;
 public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
     private Client client;
     private PanneauPrincipal panneauPrincipal;
+    private EcouteurOperationsCompte ecouteurOperationsCompte;
 
     /**
      * Construit un gestionnaire d'événements pour un client.
@@ -163,6 +166,22 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                     arg = evenement.getArgument();
                     JOptionPane.showMessageDialog(panneauPrincipal,"TRANSFER " + arg);
                     break;
+
+                case "HIST":
+                    arg = evenement.getArgument();  // Récupère l'argument envoyé par le serveur
+                    System.out.println("Réponse du serveur reçue : " + arg);  // Log pour vérifier ce que le client reçoit
+
+                    if (arg == null || arg.trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(panneauPrincipal,
+                                "Erreur : L'historique est vide ou n'a pas été reçu correctement.",
+                                "Erreur", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                    // Si l'historique est valide, l'afficher
+                    ecouteurOperationsCompte.afficherHistoriqueFenetre(arg);
+                    break;
+
+
                 /******************* TRAITEMENT PAR DÉFAUT *******************/
                 default:
                     System.out.println("RECU : "+evenement.getType()+" "+evenement.getArgument());

@@ -1,15 +1,19 @@
 package com.atoudeft.controleur;
 
 import com.atoudeft.client.Client;
+import com.atoudeft.vue.PanneauHistorique;
 import com.atoudeft.vue.PanneauOperationsCompte;
+import com.atoudeft.vue.PanneauPrincipal;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EcouteurOperationsCompte implements ActionListener {
     private Client client;
     private PanneauOperationsCompte panneauOperationsCompte;
+    PanneauPrincipal panneauPrincipal;
 
     public EcouteurOperationsCompte(Client client, PanneauOperationsCompte panneauOperationsCompte) {
         this.client = client;
@@ -18,30 +22,36 @@ public class EcouteurOperationsCompte implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
+        String actionCommand = e.getActionCommand();
         try {
-            if (source == panneauOperationsCompte.getPanneauDepot().getEffectuerDepotButton()) {
-                effectuerDepot();
-            } else if (source == panneauOperationsCompte.getBDepot()) {
-                panneauOperationsCompte.showCard("DEPOT");
-            } else if (source == panneauOperationsCompte.getBRetrait()) {
-                panneauOperationsCompte.showCard("RETRAIT");
-            } else if (source == panneauOperationsCompte.getPanneauRetrait().getEffectuerRetraitButton()) {
-                effectuerRetrait();
-            } else if (source == panneauOperationsCompte.getBTransfert()) {
-                panneauOperationsCompte.showCard("TRANSFER");
-            } else if (source == panneauOperationsCompte.getPanneauTransfert().getEffectuerTransfertButton()) {
-                effectuerTransfert();
-            } else if (source == panneauOperationsCompte.getBFacture()) {
-                panneauOperationsCompte.showCard("FACTURE");
-            } else if (source == panneauOperationsCompte.getPanneauPaiementFacture().getEffectuerPaiementButton()) {
-                effectuerPaiementFacture();
-            } else if (source == panneauOperationsCompte.getBEpargne()) {
-                client.envoyer("EPARGNE");
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "Opération non reconnue.",
-                        "Erreur", JOptionPane.ERROR_MESSAGE);
+            switch (actionCommand) {
+                case "DEPOT":
+                    panneauOperationsCompte.showCard("DEPOT");
+                   effectuerDepot(); /// si je mets ca en commentaire il y aucun depot qui se faire
+                    break;
+                case "RETRAIT":
+                    panneauOperationsCompte.showCard("RETRAIT");
+                    effectuerRetrait();
+                    break;
+                case "TRANSFER":
+                    panneauOperationsCompte.showCard("TRANSFER");
+                    effectuerTransfert();
+                    break;
+                case "FACTURE":
+                    panneauOperationsCompte.showCard("FACTURE");
+                    effectuerPaiementFacture();
+                    break;
+                case "EPARGNE":
+                    client.envoyer("EPARGNE");
+                    break;
+                case "HIST":
+                    afficherHistoriqueCompte();
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null,
+                            "Opération non reconnue.",
+                            "Erreur", JOptionPane.ERROR_MESSAGE);
+                    break;
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null,
@@ -49,8 +59,6 @@ public class EcouteurOperationsCompte implements ActionListener {
                     "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
 
     private void effectuerDepot() throws Exception {
         String montant = panneauOperationsCompte.getPanneauDepot().getMontantField().getText();
@@ -74,4 +82,37 @@ public class EcouteurOperationsCompte implements ActionListener {
         String description = panneauOperationsCompte.getPanneauPaiementFacture().getDescriptionField().getText();
         client.envoyer("FACTURE " + montant + " " + numeroFacture + " " + description);
     }
+
+    //  QUESTION 5
+    private void afficherHistoriqueCompte() {
+        String numeroCompte = panneauPrincipal.getSelectedAccountNumber();
+        if (numeroCompte == null || numeroCompte.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Veuillez sélectionner un compte pour afficher l'historique.",
+                    "Erreur", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Debug : Vérifier que la commande HIST est envoyée avec le numéro de compte
+            System.out.println("Envoi de la commande HIST pour le compte : " + numeroCompte);
+            client.envoyer("HIST " + numeroCompte); // Envoi de la commande HIST suivie du numéro de compte
+        }
+    }
+
+
+
+    // Méthode pour afficher l'historique dans une fenêtre dédiée
+    public void afficherHistoriqueFenetre(String historique) {
+        PanneauHistorique panneauHistorique = new PanneauHistorique();
+        panneauHistorique.afficherHistorique(historique);
+
+        // Création et affichage d'une nouvelle fenêtre pour l'historique
+        JFrame fenetreHistorique = new JFrame("Historique du compte");
+        fenetreHistorique.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        fenetreHistorique.add(panneauHistorique);
+        fenetreHistorique.pack();
+        fenetreHistorique.setLocationRelativeTo(null);  // Centrer la fenêtre
+        fenetreHistorique.setVisible(true);
+    }
+
+
+
 }
