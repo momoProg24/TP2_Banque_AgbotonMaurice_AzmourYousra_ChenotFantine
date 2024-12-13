@@ -106,4 +106,10 @@ public class PanneauPrincipal  extends JPanel {
         return panneauOperationsCompte;
     }
 
+    // QUESTION 5
+    public String getSelectedAccountNumber() {
+        return jlNumerosComptes.getSelectedValue();
+    }
+
+
 }

@@ -13,6 +13,8 @@ public class PanneauOperationsCompte extends JPanel {
     private PanneauRetrait panneauRetrait;
     private PanneauTransfert panneauTransfert;
     private PanneauPaiementFacture panneauPaiementFacture;
+    private PanneauHistorique panneauHistorique;
+
 
     public PanneauOperationsCompte() {
         bEpargne = new JButton("Créer compte épargne");
@@ -48,11 +50,13 @@ public class PanneauOperationsCompte extends JPanel {
         panneauRetrait = new PanneauRetrait();
         panneauTransfert = new PanneauTransfert();
         panneauPaiementFacture = new PanneauPaiementFacture();
+        panneauHistorique = new PanneauHistorique();
 
         cardPanel.add(panneauDepot, "DEPOT");
         cardPanel.add(panneauRetrait, "RETRAIT");
         cardPanel.add(panneauTransfert, "TRANSFER");
         cardPanel.add(panneauPaiementFacture, "FACTURE");
+        cardPanel.add(panneauHistorique, "HIST");
 
         this.add(cardPanel, BorderLayout.CENTER);
     }
@@ -94,4 +98,9 @@ public class PanneauOperationsCompte extends JPanel {
     public PanneauPaiementFacture getPanneauPaiementFacture() {
         return panneauPaiementFacture;
     }
+
+    public PanneauHistorique getPanneauHistorique() {
+        return panneauHistorique;
+    }
+
 }
