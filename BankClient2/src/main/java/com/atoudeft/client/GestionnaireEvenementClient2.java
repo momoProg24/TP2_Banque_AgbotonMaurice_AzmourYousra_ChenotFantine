@@ -89,7 +89,7 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                         String nouveauCompte = arg.substring(3).trim();
                         panneauPrincipal.ajouterCompte(nouveauCompte);
                         JOptionPane.showMessageDialog(panneauPrincipal,
-                                " Le compte épargne a été créer avec succès : " + nouveauCompte);
+                                " Le compte épargne a été créer avec succès, Veuillez vous déconnecter pour un bon fonctionnement ! " + nouveauCompte);
                     } else {
                         JOptionPane.showMessageDialog(panneauPrincipal,
                                 "Vous avez déja un compte épargne: " + arg,
