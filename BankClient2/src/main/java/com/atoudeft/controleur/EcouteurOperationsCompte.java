@@ -45,7 +45,7 @@ public class EcouteurOperationsCompte implements ActionListener {
                     client.envoyer("EPARGNE");
                     break;
                 case "HIST":
-                    afficherHistoriqueCompte();
+                    client.envoyer("HIST");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null,
@@ -82,37 +82,4 @@ public class EcouteurOperationsCompte implements ActionListener {
         String description = panneauOperationsCompte.getPanneauPaiementFacture().getDescriptionField().getText();
         client.envoyer("FACTURE " + montant + " " + numeroFacture + " " + description);
     }
-
-    //  QUESTION 5
-    private void afficherHistoriqueCompte() {
-        String numeroCompte = panneauPrincipal.getSelectedAccountNumber();
-        if (numeroCompte == null || numeroCompte.isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "Veuillez sélectionner un compte pour afficher l'historique.",
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
-        } else {
-            // Debug : Vérifier que la commande HIST est envoyée avec le numéro de compte
-            System.out.println("Envoi de la commande HIST pour le compte : " + numeroCompte);
-            client.envoyer("HIST " + numeroCompte); // Envoi de la commande HIST suivie du numéro de compte
-        }
-    }
-
-
-
-    // Méthode pour afficher l'historique dans une fenêtre dédiée
-    public void afficherHistoriqueFenetre(String historique) {
-        PanneauHistorique panneauHistorique = new PanneauHistorique();
-        panneauHistorique.afficherHistorique(historique);
-
-        // Création et affichage d'une nouvelle fenêtre pour l'historique
-        JFrame fenetreHistorique = new JFrame("Historique du compte");
-        fenetreHistorique.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        fenetreHistorique.add(panneauHistorique);
-        fenetreHistorique.pack();
-        fenetreHistorique.setLocationRelativeTo(null);  // Centrer la fenêtre
-        fenetreHistorique.setVisible(true);
-    }
-
-
-
 }

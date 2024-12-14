@@ -4,7 +4,6 @@ import com.atoudeft.commun.evenement.Evenement;
 import com.atoudeft.commun.evenement.GestionnaireEvenement;
 import com.atoudeft.commun.net.Connexion;
 import com.atoudeft.controleur.EcouteurOperationsCompte;
-import com.atoudeft.vue.PanneauOperationsCompte;
 import com.atoudeft.vue.PanneauPrincipal;
 import com.programmes.MainFrame;
 
@@ -168,17 +167,12 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                     break;
 
                 case "HIST":
-                    arg = evenement.getArgument();  // Récupère l'argument envoyé par le serveur
-                    System.out.println("Réponse du serveur reçue : " + arg);  // Log pour vérifier ce que le client reçoit
+                    arg = evenement.getArgument();
 
-                    if (arg == null || arg.trim().isEmpty()) {
-                        JOptionPane.showMessageDialog(panneauPrincipal,
-                                "Erreur : L'historique est vide ou n'a pas été reçu correctement.",
-                                "Erreur", JOptionPane.ERROR_MESSAGE);
-                        break;
-                    }
-                    // Si l'historique est valide, l'afficher
-                    ecouteurOperationsCompte.afficherHistoriqueFenetre(arg);
+                    JTextArea historique = new JTextArea();
+                    historique.setText(arg);
+                    historique.setEditable(false);
+                    JOptionPane.showMessageDialog(panneauPrincipal, historique, "Historique", JOptionPane.PLAIN_MESSAGE);
                     break;
 
 
